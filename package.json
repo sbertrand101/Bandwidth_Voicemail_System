@@ -1,0 +1,35 @@
+{
+  "name": "bandwidth_voicemail_system",
+  "version": "1.0.0",
+  "description": "Incoming call that gets forward to a list of numbers. If no one answers, the call gets sent to a voicemail system. The message then gets transcribed and is sent via email to whoever. API's used: Bandwidth, SendGrid",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'no test yet'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sbertrand101/Bandwidth_Voicemail_System.git"
+  },
+  "keywords": [
+    "Bandwidth",
+    "catapult",
+    "voicemail",
+    "email",
+    "transcription",
+    "call",
+    "communication",
+    "SendGrid"
+  ],
+  "author": "Stephanie Bertrand and Jillian Troftgruben",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sbertrand101/Bandwidth_Voicemail_System/issues"
+  },
+  "homepage": "https://github.com/sbertrand101/Bandwidth_Voicemail_System#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "node-bandwidth": "^2.3.3",
+    "sendgrid": "^5.1.1"
+  }
+}
