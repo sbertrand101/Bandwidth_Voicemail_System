@@ -137,10 +137,10 @@ else if (req.body.eventType === "recording" && req.body.state === "complete"){
 
 ```
 10. Email the transcription to the designated receiver using Sendgrid’s API 
-   1. Sign up for a sendgrid API in order to receive your API credentials. 
-   2. Follow the getting started guide to setup your developer guide. 
-   3. Add the following code to the post in-call method. 
-   ```
+    1. Sign up for a sendgrid API in order to receive your API credentials. 
+    2. Follow the getting started guide to setup your developer guide. 
+    3. Add the following code to the post in-call method. 
+    ```
    else if (req.body.eventType === "transcription" && req.body.state === "completed"){
 		console.log(req.body);
 		//SENDGRID
@@ -172,7 +172,7 @@ else if (req.body.eventType === "recording" && req.body.state === "complete"){
 	else{
 		console.log(req.body);
 	}
-	```
+    ```
 11. Make the program listen for any incoming activity.
 ```
 http.listen(app.get('port'), function(){
