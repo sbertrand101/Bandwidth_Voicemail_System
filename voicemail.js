@@ -1,4 +1,4 @@
-//----Bandwidth Number to call: +18283072601-----
+//----Bandwidth Number to call: +17042662707-----
 
 var Bandwidth = require("node-bandwidth");
 var express = require("express");
@@ -28,15 +28,16 @@ const getBaseUrlFromReq = (req) => {
 
 app.get("/", function (req, res) {
     console.log(req); 
-    res.send("Bandwdith_Voicemail_System");
+    res.send("Bandwdith_Simple_Voicemail_System");
     //res.send(can be a website);
 });
 
-let listOfNumbers = [+13035659555, +18283072634];
+let toNumber = "+19197891146";
+
 
 //+19198251930 conference room number
 
-var index = 0;
+
 app.post('/out-call', function (req, res) {			//OUTBOUND CALLS
     var this_url2 = getBaseUrlFromReq(req);
     if (req.body.eventType === 'answer') {
@@ -56,11 +57,11 @@ app.post('/out-call', function (req, res) {			//OUTBOUND CALLS
         	console.log("----Could not bridge the call----");
         });
     }
-    else if (req.body.eventType === "timeout" && !(index === listOfNumbers.length)){
-    	createCallWithCallback(req.body.from, this_url2, req.body.tag);
-		console.log(req.body);
-		console.log("-----The phone call has timed out-----");
-	}
+ //    else if (req.body.eventType === "timeout" && !(index === listOfNumbers.length)){
+ //    	createCallWithCallback(req.body.from, this_url2, req.body.tag);
+	// 	console.log(req.body);
+	// 	console.log("-----The phone call has timed out-----");
+	// }
 	else if (req.body.eventType === "timeout"){
 		console.log("Tag: " + req.body.tag)
 		client.Call.speakSentence(req.body.tag, "You have reached Bandwidth. Sorry we can't get to the phone right now, please leave your message after the beep. BEEP.")
@@ -111,31 +112,7 @@ app.post('/in-call', function (req, res) {				//INBOUND CALLS
 	}
 	else if (req.body.eventType === "transcription" && req.body.state === "completed"){
 		console.log(req.body);
-		//SENDGRID
-		// using SendGrid's v3 Node.js Library
-		// https://github.com/sendgrid/sendgrid-nodejs
-		var helper = require('sendgrid').mail;
-		var fromEmail = new helper.Email('test@example.com');
-		var toEmail = new helper.Email('jtroftgruben@bandwidth.com');
-		var subject = 'Voicemail email test';
-		var content = new helper.Content('text/plain', req.body.text);
-		var mail = new helper.Mail(fromEmail, subject, toEmail, content);
-
-		var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
-		var request = sg.emptyRequest({
-		  method: 'POST',
-		  path: '/v3/mail/send',
-		  body: mail.toJSON()
-		});
-
-		sg.API(request, function (error, response) {
-  		if (error) {
-    		console.log('Error response received');
-  		}
-  		console.log(response.statusCode);
-  		console.log(response.body);
-  		console.log(response.headers);
-		});
+		console.log("Transcribed");
 	}
 	else{
 		console.log(req.body);
@@ -146,13 +123,12 @@ app.post('/in-call', function (req, res) {				//INBOUND CALLS
 var createCallWithCallback = function(FromBWnumber, this_url, tag){	
     return client.Call.create({
  		from: FromBWnumber,
-        to: listOfNumbers[index],
+        to: toNumber,
         callTimeout: 10,
         callbackUrl: this_url + '/out-call',
         tag: tag
     })
     .then(function (call) {
-    	index++;
         console.log("Outgoing call Id: " + call.callId);
         console.log(call);
         console.log("----Outbound call has been created----");
